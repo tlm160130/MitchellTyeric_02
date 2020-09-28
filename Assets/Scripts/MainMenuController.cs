@@ -20,4 +20,9 @@ public class MainMenuController : MonoBehaviour
             AudioManager.Instance.PlaySong(_startingSong);
         }
     }
+
+    public void Reset()
+    {
+        PlayerPrefs.DeleteKey("HighScore");
+    }
 }

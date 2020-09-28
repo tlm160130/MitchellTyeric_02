@@ -14,6 +14,9 @@ public class Level01Contoller : MonoBehaviour
 
     int _currentScore;
 
+    public static bool _gameIsPaused = false;
+    public GameObject _pauseMenuUI;
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q))
@@ -23,7 +26,16 @@ public class Level01Contoller : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ExitLevel();
+            if (_gameIsPaused)
+            {
+                Resume();
+            }
+            else
+            {
+                Pause();
+            }
+
+            //ExitLevel();
         }
     }
 
@@ -45,5 +57,28 @@ public class Level01Contoller : MonoBehaviour
         }
 
         SceneManager.LoadScene("MainMenu");
+    }
+
+    public void Resume()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        _pauseMenuUI.SetActive(false);
+        Time.timeScale = 1f;
+        _gameIsPaused = false;
+    }
+
+    public void Pause()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        _gameIsPaused = true;
+    }
+
+    public void QuitGame()
+    {
+        ExitLevel();
     }
 }
