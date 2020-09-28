@@ -19,6 +19,7 @@ public class Level01Contoller : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetKeyDown(KeyCode.Q))
         {
             IncreaseScore(5);
@@ -34,8 +35,6 @@ public class Level01Contoller : MonoBehaviour
             {
                 Pause();
             }
-
-            //ExitLevel();
         }
     }
 

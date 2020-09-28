@@ -6,23 +6,37 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance = null;
+    [SerializeField] AudioClip _startingSong;
+
+    private static AudioManager instance = null;
+    public static AudioManager Instance
+    {
+        get { return instance; }
+    }
 
     AudioSource _audioSource;
 
+    private void Start()
+    {
+        if (_startingSong != null)
+        {
+            AudioManager.Instance.PlaySong(_startingSong);
+        }
+    }
+
     private void Awake()
     {
-        if (Instance == null)
+        if (instance != null && instance != this)
         {
-            //doesn't exist yet, this is now our singleton!
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            //fill references
-            _audioSource = GetComponent<AudioSource>();
+            Destroy(this.gameObject);
         }
         else
         {
-            Destroy(gameObject);
+            //doesn't exist yet, this is now our singleton!
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+            //fill references
+            _audioSource = GetComponent<AudioSource>();
         }
     }
 

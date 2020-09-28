@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ce31183c6278b4780a292c5179c12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _startingSong: {fileID: 8300000, guid: a58c495b2d107274591c957158259412, type: 3}
 --- !u!82 &8297810151376949970
 AudioSource:
   m_ObjectHideFlags: 0

@@ -1646,9 +1646,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8297810151376949969, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
+      propertyPath: _startingSong
+      value: 
+      objectReference: {fileID: 8300000, guid: a58c495b2d107274591c957158259412, type: 3}
     - target: {fileID: 8297810151376949970, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8297810151376949970, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
+      propertyPath: Loop
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8297810151376949971, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
       propertyPath: m_Name
@@ -1951,7 +1959,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db802d3919dd0144913ae4f97fc0ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingSong: {fileID: 8300000, guid: a58c495b2d107274591c957158259412, type: 3}
   _highScoreTextView: {fileID: 832299669}
 --- !u!1 &1893474334
 GameObject:
