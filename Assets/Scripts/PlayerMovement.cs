@@ -8,6 +8,11 @@ public class PlayerMovement : MonoBehaviour
 
     public CharacterController controller;
 
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public HealthBar healthBar;
+
     public float speed = 6f;
     public float gravity = -9.81f;
     public Transform groundCheck;
@@ -19,15 +24,26 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
-    // Update is called once per frame
+    void Start()
+    {
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
+    }
+
     void Update()
     {
+
         //checks if we've hit the ground
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y< 0)
         {
             velocity.y = -2f;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            TakeDamage(20);
         }
 
         float x = Input.GetAxis("Horizontal");
@@ -53,5 +69,12 @@ public class PlayerMovement : MonoBehaviour
 
         //physics of a free fall
         controller.Move(velocity * Time.deltaTime);
+    }
+
+    void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
     }
 }
