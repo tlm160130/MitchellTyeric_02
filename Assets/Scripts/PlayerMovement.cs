@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
 
     public CharacterController controller;
+
+    public static bool _gameIsPaused = false;
+    public GameObject _pauseMenuUI;
 
     public int maxHealth = 100;
     public int currentHealth;
@@ -41,11 +45,6 @@ public class PlayerMovement : MonoBehaviour
             velocity.y = -2f;
         }
 
-        if (Input.GetKeyDown(KeyCode.Backspace))
-        {
-            TakeDamage(20);
-        }
-
         float x = Input.GetAxis("Horizontal");
         float z = Input.GetAxis("Vertical");
 
@@ -64,6 +63,11 @@ public class PlayerMovement : MonoBehaviour
             controller.Move(move * sprint * Time.deltaTime);
         } 
 
+        if (currentHealth <= 0)
+        {
+            Pause();
+        }
+
         //we use Velocity to handle Gravity
         velocity.y += gravity * Time.deltaTime;
 
@@ -71,10 +75,33 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(velocity * Time.deltaTime);
     }
 
+    public void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Hazard"))
+        {
+            other.gameObject.SetActive(false);
+            TakeDamage(25);
+        }
+    }
+
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
         healthBar.SetHealth(currentHealth);
+    }
+
+    public void Pause()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        _gameIsPaused = true;
+    }
+
+    public void Kill()
+    {
+        this.gameObject.SetActive(false);
     }
 }

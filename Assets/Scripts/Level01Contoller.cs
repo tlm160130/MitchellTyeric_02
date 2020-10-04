@@ -58,6 +58,11 @@ public class Level01Contoller : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void Retry()
+    {
+        SceneManager.LoadScene("Level01");
+    }
+
     public void Resume()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -74,6 +79,11 @@ public class Level01Contoller : MonoBehaviour
         _pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         _gameIsPaused = true;
+    }
+
+    public void ResetLevel()
+    {
+        Retry();
     }
 
     public void QuitGame()
