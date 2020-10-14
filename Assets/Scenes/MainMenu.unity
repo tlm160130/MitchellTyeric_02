@@ -1650,6 +1650,10 @@ PrefabInstance:
       propertyPath: _startingSong
       value: 
       objectReference: {fileID: 8300000, guid: a58c495b2d107274591c957158259412, type: 3}
+    - target: {fileID: 8297810151376949969, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
+      propertyPath: _deathSong
+      value: 
+      objectReference: {fileID: 8300000, guid: 28769c4058a2b7e42ad078bd22f9ce3a, type: 3}
     - target: {fileID: 8297810151376949970, guid: 08599fdd9453e244b8aee59f2a520a90, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0

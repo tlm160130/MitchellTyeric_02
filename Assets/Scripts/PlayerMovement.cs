@@ -28,6 +28,14 @@ public class PlayerMovement : MonoBehaviour
     Vector3 velocity;
     bool isGrounded;
 
+    [SerializeField]
+    AudioSource hitSound;
+
+    [SerializeField]
+    AudioSource deathSound;
+
+    public bool alreadyPlayed = false;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -66,6 +74,7 @@ public class PlayerMovement : MonoBehaviour
         if (currentHealth <= 0)
         {
             Pause();
+            GameOver();
         }
 
         //we use Velocity to handle Gravity
@@ -82,11 +91,40 @@ public class PlayerMovement : MonoBehaviour
             other.gameObject.SetActive(false);
             TakeDamage(25);
         }
+
+        if (other.gameObject.CompareTag("Heal"))
+        {
+            other.gameObject.SetActive(false);
+            GiveHealth(20);
+        }
+
+        if (other.gameObject.CompareTag("Projectile"))
+        {
+            hitSound.Play();
+            TakeDamage(15);
+        }
     }
 
     void TakeDamage(int damage)
     {
         currentHealth -= damage;
+
+        healthBar.SetHealth(currentHealth);
+    }
+
+    void GameOver()
+    {
+        deathSound.Play();
+        alreadyPlayed = true;
+        if (alreadyPlayed)
+        {
+            return;
+        }
+    }
+
+    void GiveHealth(int heal)
+    {
+        currentHealth += heal;
 
         healthBar.SetHealth(currentHealth);
     }
