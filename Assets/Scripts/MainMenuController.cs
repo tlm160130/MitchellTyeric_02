@@ -6,17 +6,17 @@ using UnityEngine.UI;
 
 public class MainMenuController : MonoBehaviour
 {
-    [SerializeField] Text _highScoreTextView;
+    [SerializeField] Text _TimerTextView;
 
     void Start()
     {
 
-        int highScore = PlayerPrefs.GetInt("HighScore");
-        _highScoreTextView.text = highScore.ToString();
+        //int highScore = PlayerPrefs.GetInt("HighScore");
+        //_highScoreTextView.text = highScore.ToString();
     }
 
     public void Reset()
     {
-        PlayerPrefs.DeleteKey("HighScore");
+        //PlayerPrefs.DeleteKey("HighScore");
     }
 }

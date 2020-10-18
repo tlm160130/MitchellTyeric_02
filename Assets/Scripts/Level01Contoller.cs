@@ -9,21 +9,25 @@ using System.Diagnostics;
 
 public class Level01Contoller : MonoBehaviour
 {
+    
+    [SerializeField] Text _currentTimeTextView;
+    [SerializeField] AudioSource _winSound;
 
-    [SerializeField] Text _currentScoreTextView;
+    public int _currentTime = 30;
 
-    int _currentScore;
+    public bool _takingAway = false;
 
     public static bool _gameIsPaused = false;
     public GameObject _pauseMenuUI;
+    public GameObject _winScreenUI;
+
+    void Start()
+    {
+        _currentTimeTextView.text = "00:" + _currentTime;
+    }
 
     void Update()
     {
-
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            IncreaseScore(5);
-        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -36,23 +40,41 @@ public class Level01Contoller : MonoBehaviour
                 Pause();
             }
         }
+
+        if (_takingAway == false && _currentTime > 0)
+        {
+            StartCoroutine(TimerTake());
+        }
+
+        if (_currentTime <= 0)
+        {
+            Win();
+        }
     }
 
-    public void IncreaseScore(int scoreIncrease)
+    IEnumerator TimerTake()
     {
-        _currentScore += scoreIncrease;
-        //update score text display
-        _currentScoreTextView.text =
-            "Score: " + _currentScore.ToString();
+        _takingAway = true;
+        yield return new WaitForSeconds(1);
+        _currentTime -= 1;
+        if (_currentTime < 10)
+        {
+            _currentTimeTextView.text = "00:0" + _currentTime;
+        }
+        else
+        {
+            _currentTimeTextView.text = "00:" + _currentTime;
+        }
+        _takingAway = false;
     }
 
     public void ExitLevel()
     {
 
         int highScore = PlayerPrefs.GetInt("HighScore");
-        if (_currentScore > highScore)
+        if (_currentTime > highScore)
         {
-            PlayerPrefs.SetInt("HighScore", _currentScore);
+            PlayerPrefs.SetInt("HighScore", _currentTime);
         }
 
         SceneManager.LoadScene("MainMenu");
@@ -77,6 +99,15 @@ public class Level01Contoller : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        _gameIsPaused = true;
+    }
+
+    public void Win()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _winScreenUI.SetActive(true);
         Time.timeScale = 0f;
         _gameIsPaused = true;
     }

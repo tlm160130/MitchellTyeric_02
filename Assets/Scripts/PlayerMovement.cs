@@ -31,10 +31,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField]
     AudioSource hitSound;
 
-    [SerializeField]
-    AudioSource deathSound;
-
-    public bool alreadyPlayed = false;
+    public GameObject _loseScreenUI;
 
     void Start()
     {
@@ -73,8 +70,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            Pause();
-            GameOver();
+            Lose();
         }
 
         //we use Velocity to handle Gravity
@@ -112,16 +108,6 @@ public class PlayerMovement : MonoBehaviour
         healthBar.SetHealth(currentHealth);
     }
 
-    void GameOver()
-    {
-        deathSound.Play();
-        alreadyPlayed = true;
-        if (alreadyPlayed)
-        {
-            return;
-        }
-    }
-
     void GiveHealth(int heal)
     {
         currentHealth += heal;
@@ -134,6 +120,15 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         _pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        _gameIsPaused = true;
+    }
+
+    public void Lose()
+    {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        _loseScreenUI.SetActive(true);
         Time.timeScale = 0f;
         _gameIsPaused = true;
     }
